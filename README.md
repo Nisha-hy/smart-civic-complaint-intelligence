@@ -1,112 +1,157 @@
-# Smart Civic Complaint Intelligence System
-## Project Overview
+# 🏙️ Smart Civic Complaint Intelligence System
 
-The Smart Civic Complaint Intelligence System is a machine learning-based project designed to analyse civic complaints and identify patterns related to complaint escalation and resolution.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"/>
+  <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas"/>
+  <img src="https://img.shields.io/badge/Scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white" alt="Scikit-learn"/>
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git"/>
+</p>
 
-The project aims to support better understanding of civic complaint management through data analysis and machine learning.
-## Problem Statement
+<p align="center">
+  <b>Machine Learning | Civic Technology | Data Analysis</b>
+</p>
 
-Civic authorities receive complaints related to issues such as waste management, road damage, water supply and public infrastructure.
+---
+
+## 📌 Project Overview
+
+The **Smart Civic Complaint Intelligence System** is a machine learning-based project designed to analyse civic complaints and identify patterns related to complaint escalation and resolution.
+
+The project explores how data analysis and machine learning can support a better understanding of civic complaint management.
+
+## ❗ Problem Statement
+
+Civic authorities receive complaints related to waste management, road damage, water supply and public infrastructure.
 
 Managing these complaints efficiently can be challenging due to variations in complaint severity, workload and resolution time.
 
 This project explores how machine learning can help analyse complaint data and identify complaints that may require additional attention.
-## Objectives
+
+## 🎯 Objectives
 
 - Analyse civic complaint data.
 - Identify patterns in complaint escalation.
 - Study factors affecting complaint resolution time.
 - Apply machine learning techniques to civic complaint data.
-- Present useful insights through a dashboard.
-## Key Features
+- Present analytical insights through a dashboard.
+
+## ✨ Key Features
 
 - Civic complaint data analysis.
 - Complaint escalation prediction.
 - Complaint resolution pattern analysis.
 - Machine learning-based insights.
-- Dashboard for presenting analytical results.
-## Technologies Used
+- Interactive dashboard for presenting analytical results.
 
-- **Programming Language:** Python
-- **Web Framework:** Streamlit
-- **Data Analysis:** Pandas
-- **Machine Learning:** Scikit-learn
-- **Model Serialization:** Joblib
-- **Data Visualization:** Altair
-- **Version Control:** Git and GitHub
-- **Development Environment:** Visual Studio Code
-## Dataset Information
+## 🛠️ Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| Python | Programming language |
+| Streamlit | Web dashboard |
+| Pandas | Data analysis |
+| Scikit-learn | Machine learning |
+| Joblib | Model serialization |
+| Altair | Data visualization |
+| Git & GitHub | Version control |
+
+## 📊 Dataset Information
 
 - **Dataset:** Mumbai Nagar Seva – BMC Civic Complaint Resolution (2018–2024)
 - **Source:** Kaggle
 - **Domain:** Civic Complaint Management
 - **Location:** Mumbai, India
 
-The dataset contains civic complaint-related information that can be used to analyse complaint patterns, escalation and resolution.
+The dataset contains civic complaint-related information used to explore complaint patterns, escalation and resolution.
 
-Note: The original dataset is not included in this GitHub repository because of its large file size. Users must obtain the dataset from its original Kaggle source.
-## Project Structure
+> **Note:** The original dataset is not included in this repository because of its large file size. Download it from its original Kaggle source before running the project.
 
-civiccomplaintML/
+## 📁 Project Structure
+
+```text
+smart-civic-complaint-intelligence/
 │
 ├── app.py
 ├── analytics.py
 ├── preprocess.py
 ├── train_model.py
 ├── train_escalation_model.py
+│
+├── requirements.txt
 ├── .gitignore
 └── README.md
-## Installation and Setup
+```
 
-### 1. Clone the Repository
+## ⚙️ Installation and Setup
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/Nisha-hy/smart-civic-complaint-intelligence.git
+```
+
+### 2. Navigate to the project directory
+
+```bash
 cd smart-civic-complaint-intelligence
 ```
 
-### 2. Create a Virtual Environment
+### 3. Create a virtual environment
 
 ```bash
 python -m venv .venv
 ```
 
-Activate it on Windows:
+### 4. Activate the virtual environment
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-### 3. Install Dependencies
+### 5. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Dataset Setup
+## 📂 Dataset Setup
 
-This project uses the Mumbai Nagar Seva – BMC Civic Complaint Resolution (2018–2024) dataset from Kaggle.
+1. Download the required `bmc_train.csv` dataset from Kaggle.
+2. Place the downloaded CSV file in the project root directory.
+3. Ensure the filename is exactly `bmc_train.csv`.
 
-1. Obtain the dataset from its original Kaggle source.
-2. Download the training dataset.
-3. Place the file named `bmc_train.csv` in the root project directory.
+## ▶️ Run the Project
 
-**Important:** The dataset is not included in this GitHub repository.
-
-## How to Run the Project
-
-### Step 1: Train the Machine Learning Model
+### Train the satisfaction prediction model
 
 ```bash
 python train_model.py
 ```
 
-This script trains the citizen satisfaction classification model, evaluates its performance and saves the trained model as `civic_satisfaction_model.joblib`.
-
-### Step 2: Launch the Dashboard
+### Launch the Streamlit dashboard
 
 ```bash
 streamlit run app.py
 ```
 
-The Streamlit dashboard will open in your web browser.
+## 🔮 Future Enhancements
+
+- Improve prediction performance through model evaluation and tuning.
+- Add more interactive data visualizations.
+- Explore additional factors influencing complaint resolution.
+- Enhance dashboard usability.
+
+## 👩‍💻 Author
+
+**Nisha H Y**
+
+Electronics and Communication Engineering
+
+GitHub: [@Nisha-hy](https://github.com/Nisha-hy)
+
+---
+
+<p align="center">
+  ⭐ If you find this project interesting, consider giving the repository a star!
+</p>
