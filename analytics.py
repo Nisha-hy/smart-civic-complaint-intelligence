@@ -355,22 +355,215 @@ st.caption(
     "establish causation or guarantee future outcomes."
 )
 
-st.subheader("Escalation Target Investigation")
 
-st.write("Complaint status counts:")
+# -------------------------------
+# CHART 5: ESCALATION ANALYSIS
+# -------------------------------
 
-status_counts = df["complaint_status"].value_counts(
-    dropna=False
-).reset_index()
+st.divider()
 
-status_counts.columns = ["Complaint Status", "Count"]
+st.header("5. Complaint Escalation Analysis & Monitoring")
 
-st.dataframe(status_counts, use_container_width=True)
+st.write(
+    "Monitor escalated complaints and understand how "
+    "escalation patterns vary across categories, zones, "
+    "severity levels, and complaint statuses."
+)
 
-st.write("Available complaint-related columns:")
-st.write([
-    col for col in df.columns
-    if any(word in col.lower() for word in [
-        "escalat", "status", "reassign", "resolution"
-    ])
-])
+# Identify escalated complaints
+escalated_df = filtered_df[
+    filtered_df["complaint_status"]
+    .astype(str)
+    .str.strip()
+    .str.lower()
+    .eq("escalated")
+].copy()
+
+total_escalated = len(escalated_df)
+
+escalation_rate = (
+    total_escalated / total_complaints * 100
+    if total_complaints > 0
+    else 0
+)
+
+# KPI metrics
+st.subheader("Escalation Overview")
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric(
+    "Total Escalated Complaints",
+    f"{total_escalated:,}"
+)
+
+col2.metric(
+    "Escalation Percentage",
+    f"{escalation_rate:.2f}%"
+)
+
+col3.metric(
+    "Non-Escalated Complaints",
+    f"{total_complaints - total_escalated:,}"
+)
+
+st.caption(
+    "Escalation percentage = escalated complaints / "
+    "total filtered complaints × 100."
+)
+
+st.divider()
+
+
+# CHART 5A: ESCALATED COMPLAINTS BY CATEGORY
+
+st.subheader("5.1 Escalated Complaints by Category")
+
+if not escalated_df.empty:
+    category_escalations = (
+        escalated_df["complaint_category"]
+        .fillna("Unknown")
+        .value_counts()
+        .head(10)
+        .rename_axis("Complaint Category")
+        .reset_index(name="Escalated Complaints")
+        .sort_values("Escalated Complaints")
+    )
+
+    category_escalation_chart = (
+        alt.Chart(category_escalations)
+        .mark_bar()
+        .encode(
+            x=alt.X(
+                "Escalated Complaints:Q",
+                title="Number of Escalated Complaints"
+            ),
+            y=alt.Y(
+                "Complaint Category:N",
+                sort=None,
+                title="Complaint Category",
+                axis=alt.Axis(labelLimit=260)
+            ),
+            tooltip=[
+                "Complaint Category",
+                "Escalated Complaints"
+            ]
+        )
+        .properties(height=350)
+    )
+
+    st.altair_chart(
+        category_escalation_chart,
+        use_container_width=True
+    )
+else:
+    st.info("No escalated complaints for the selected filters.")
+
+
+# CHART 5B: ESCALATED COMPLAINTS BY ZONE
+
+st.subheader("5.2 Escalated Complaints by Zone")
+
+if not escalated_df.empty:
+    zone_escalations = (
+        escalated_df["zone"]
+        .fillna("Unknown")
+        .value_counts()
+    )
+
+    st.bar_chart(zone_escalations)
+else:
+    st.info("No zone-wise escalation data available.")
+
+
+# CHART 5C: ESCALATION PERCENTAGE BY SEVERITY
+
+st.subheader("5.3 Escalation Percentage by Severity")
+
+if "severity" in filtered_df.columns:
+    severity_data = filtered_df.dropna(
+        subset=["severity", "complaint_status"]
+    ).copy()
+
+    if not severity_data.empty:
+        severity_data["Is Escalated"] = (
+            severity_data["complaint_status"]
+            .astype(str)
+            .str.strip()
+            .str.lower()
+            .eq("escalated")
+        )
+
+        severity_rates = (
+            severity_data.groupby("severity")["Is Escalated"]
+            .mean()
+            .mul(100)
+            .sort_values(ascending=False)
+        )
+
+        st.bar_chart(severity_rates)
+
+        st.caption(
+            "Percentage of complaints escalated within "
+            "each severity category."
+        )
+    else:
+        st.info("No severity data available.")
+else:
+    st.info("Severity column is unavailable.")
+
+
+# CHART 5D: COMPLAINT STATUS DISTRIBUTION
+
+st.subheader("5.4 Complaint Status Distribution")
+
+status_counts = (
+    filtered_df["complaint_status"]
+    .fillna("Unknown")
+    .value_counts()
+    .rename_axis("Complaint Status")
+    .reset_index(name="Number of Complaints")
+)
+
+if not status_counts.empty:
+    status_chart = (
+        alt.Chart(status_counts)
+        .mark_bar()
+        .encode(
+            x=alt.X(
+                "Number of Complaints:Q",
+                title="Number of Complaints"
+            ),
+            y=alt.Y(
+                "Complaint Status:N",
+                sort="-x",
+                title="Complaint Status"
+            ),
+            tooltip=[
+                "Complaint Status",
+                "Number of Complaints"
+            ]
+        )
+        .properties(height=300)
+    )
+
+    st.altair_chart(
+        status_chart,
+        use_container_width=True
+    )
+
+# Status data table
+with st.expander("View complaint status counts"):
+    st.dataframe(
+        status_counts,
+        use_container_width=True
+    )
+
+
+st.divider()
+
+st.caption(
+    "Escalation monitoring uses historical complaint statuses. "
+    "These charts describe recorded patterns and do not "
+    "predict whether a future complaint will be escalated."
+)
