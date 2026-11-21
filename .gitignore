@@ -3,3 +3,5 @@ bmc_train.csv
 __pycache__/
 .venv/
 .env
+*.db
+app_backup.py
